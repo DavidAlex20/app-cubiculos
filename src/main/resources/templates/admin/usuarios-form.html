@@ -1,0 +1,79 @@
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}">
+<body>
+  <main id="main" class="main" layout:fragment="body">
+
+    <div class="pagetitle">
+        <h1 th:text="${datosVista.titulo}"></h1>
+        <nav>
+            <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/dashboard}">Menu</a></li>
+            <li class="breadcrumb-item active">Usuarios</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+  
+    <section class="section dashboard">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <h5 class="card-title" th:text="${datosVista.titulo}"></h5>
+                    <a type="button" th:href="@{/admin/usuarios}" class="btn btn-secondary ms-auto">Cancelar</a>
+                  </div>
+                <p class="m-1"></p>
+                
+                <!-- Multi Columns Form -->
+                <form th:id="saveUser" class="row g-3 needs-validation"
+                    th:object="${usuario}" novalidate>
+                    <input th:id="id" type="hidden" th:field="*{id}">
+                    <div class="col-md-6">
+                        <label for="username" class="form-label">Nombre de usuario</label>
+                        <input th:id="username" type="text" class="form-control" th:field="*{username}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input th:id="password" type="text" class="form-control" th:field="*{password}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="nombres" class="form-label">Nombre(s)</label>
+                        <input th:id="nombres" type="text" class="form-control" th:field="*{nombres}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="apellidos" class="form-label">Apellido(s)</label>
+                        <input th:id="apellidos" type="text" class="form-control" th:field="*{apellidos}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="form-label">Correo electrónico</label>
+                        <input th:id="email" type="text" class="form-control" th:field="*{email}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="numempleado" class="form-label"># Empleado</label>
+                        <input th:id="numempleado" type="text" class="form-control" th:field="*{numempleado}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="status" class="form-label">Estado</label>
+                        <select th:id="status" th:field="*{status}" id="status" class="form-control">
+                          <option th:value="FITEC" th:text="FITEC"></option>
+                          <option th:value="VISITANTE" th:text="Visitante"></option>
+                          <option th:value="FORANEO" th:text="Foráneo"></option>
+                        </select>
+                    </div>
+                    <input th:id="activo" type="hidden" th:field="*{activo}">
+                    <input th:id="role" type="hidden" th:field="*{role}">
+                    <div>
+                        <input type="submit" class="btn btn-success" value="Guardar">
+                    </div>
+                </form><!-- End Multi Columns Form -->
+            </div>
+        </div>
+    </section>
+  </main><!-- End #main -->
+
+  <script>
+      
+  </script>
+</body>
+
+
+</html>
