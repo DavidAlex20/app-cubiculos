@@ -1,6 +1,5 @@
 package com.um.appasistencias.services;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,19 +45,11 @@ public class UsuariosService implements ReactiveUserDetailsService {
     }
 
     public Mono<Usuarios> update(String id, Usuarios user) {
-        Mono<Usuarios> u = findById(id);
         UUID uuid = UUID.fromString(id);
-        return u.map(Optional::of).defaultIfEmpty(Optional.empty())
-        .flatMap(opt -> {
-            if(opt.isPresent()) {
-                user.setId(id);
-                return usuariosRepository.update(
-                    user.getUsername(), passwordEncoder.encode(user.getPassword()), user.getRole(), user.getNombres(), user.getApellidos(),
-                    user.getNumempleado(), user.getStatus(), user.isActivo(), user.getEmail(), uuid
-                );
-            }
-            return Mono.empty();
-        });
+        return usuariosRepository.update(
+            user.getUsername(), passwordEncoder.encode(user.getPassword()), user.getRole(), user.getNombres(), user.getApellidos(),
+            user.getNumempleado(), user.getStatus(), user.isActivo(), user.getEmail(), uuid
+        );
     }
 
     @Override
@@ -79,11 +70,6 @@ public class UsuariosService implements ReactiveUserDetailsService {
     }
 
     public Mono<Usuarios> register(String username, String password, String role, String nombres, String apellidos, String numempleado, String status, String email) {
-        return usuariosRepository.findByUsername(username)
-            .flatMap(user -> Mono.error(new RuntimeException("User already exists!")))
-            .cast(Usuarios.class)
-            .switchIfEmpty(
-                usuariosRepository.save(new Usuarios(username, passwordEncoder.encode(password), role, nombres, apellidos, numempleado, status, true, email))
-            );
+        return usuariosRepository.save(new Usuarios(username, passwordEncoder.encode(password), role, nombres, apellidos, numempleado, status, true, email));
     }
 }

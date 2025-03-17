@@ -1,7 +1,5 @@
 $(document).ready(function() {
-    console.log('Usuarios Script - Funcional!');
-
-    $('#password').val('App@' + new Date().getFullYear());
+    console.log('Cubiculos Script - Funcional!');
 
     $('.delete').on('click', function() {
       let uid = $(this).attr('id');
@@ -15,7 +13,7 @@ $(document).ready(function() {
       }).then((result)=>{
         if(result.isConfirmed) {
           $.ajax({
-            url: "/admin/usuarios/eliminar",
+            url: "/admin/cubiculos/eliminar",
             type: "GET",
             data: {id: uid},
             success: function(response) {
@@ -24,7 +22,7 @@ $(document).ready(function() {
                 text: response,
                 icon: "success"
               }).then(() => {
-                window.location = "/admin/usuarios";
+                window.location = "/admin/cubiculos";
               });
             },
             error: function(xhr) {              
@@ -43,27 +41,15 @@ $(document).ready(function() {
       event.preventDefault();
 
       let id = $('#id').val();
-      let username = $('#username').val();
-      let password = $('#password').val();
-      let role = $('#role').val();
-      let nombres = $('#nombres').val();
-      let apellidos = $('#apellidos').val();
-      let numempleado = $('#numempleado').val();
-      let status = $('#status').val();
-      let activo = $('#activo').val();
-      let email = $('#email').val();
+      let numero = $('#numero').val();
+      let edificio = $('#edificio').val();
+      let disponible = $('#disponible').val();
 
       if (
         id === undefined || id === null || id === "" ||
-        username === undefined || username === null || username === "" ||
-        password === undefined || password === null || password === "" ||
-        role === undefined || role === null || role === "" ||
-        nombres === undefined || nombres === null || nombres === "" ||
-        apellidos === undefined || apellidos === null || apellidos === "" ||
-        numempleado === undefined || numempleado === null || numempleado === "" ||
-        status === undefined || status === null || status === "" ||
-        activo === undefined || activo === null || activo === "" ||
-        email === undefined || email === null || email === ""
+        numero === undefined || numero === null || numero === "" ||
+        edificio === undefined || edificio === null || edificio === "" ||
+        disponible === undefined || disponible === null || disponible === ""
       ){ 
         Swal.fire({
           title: "¡Espera!",
@@ -81,7 +67,7 @@ $(document).ready(function() {
         }).then((result) => {
           if(result.isConfirmed) {
             $.ajax({
-              url: "/admin/usuarios/guardar",
+              url: "/admin/cubiculos/guardar",
               type: "POST",
               data: $(this).serialize(),
               success: function(response) {
@@ -90,7 +76,7 @@ $(document).ready(function() {
                   text: response,
                   icon: "success"
                 }).then(() => {
-                  window.location = "/admin/usuarios";
+                  window.location = "/admin/cubiculos";
                 });
               },
               error: function(xhr) {

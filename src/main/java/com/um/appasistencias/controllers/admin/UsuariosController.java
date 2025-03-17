@@ -37,7 +37,7 @@ public class UsuariosController {
         Flux<Usuarios> usuarios = usuariosService.findAll();
         model.addAttribute("usuarios", usuarios);
         DatosVista datosVista = new DatosVista(user, "lista-usuarios", "Listado de usuarios", true);
-        log.info(datosVista.toString());
+        //log.info(datosVista.toString());
         model.addAttribute("datosVista", datosVista);
         return "admin/usuarios";
     }
@@ -47,8 +47,8 @@ public class UsuariosController {
         Usuarios usuario = new Usuarios("", "", "USER", "", "", "", "", true, "");
         usuario.setId("0");
         model.addAttribute("usuario", usuario);
-        DatosVista datosVista = new DatosVista(user, "lista-usuarios", "Listado de usuarios", true);
-        log.info(datosVista.toString());
+        DatosVista datosVista = new DatosVista(user, "lista-usuarios", "Registrar nuevo usuario", true);
+        //log.info(datosVista.toString());
         model.addAttribute("datosVista", datosVista);
         return "admin/usuarios-form";
     }
@@ -57,8 +57,8 @@ public class UsuariosController {
     public String editar(@AuthenticationPrincipal Usuarios user, @PathVariable String id, Model model) {
         Mono<Usuarios> usuario = usuariosService.findById(id);
         model.addAttribute("usuario", usuario);
-        DatosVista datosVista = new DatosVista(user, "lista-usuarios", "Listado de usuarios", true);
-        log.info(datosVista.toString());
+        DatosVista datosVista = new DatosVista(user, "lista-usuarios", "Editar usuario", true);
+        //log.info(datosVista.toString());
         model.addAttribute("datosVista", datosVista);
         return "admin/usuarios-form";
     }

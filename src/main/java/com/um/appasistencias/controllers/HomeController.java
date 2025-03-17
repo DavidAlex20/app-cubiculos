@@ -20,7 +20,7 @@ public class HomeController {
     public String index(@AuthenticationPrincipal Usuarios user, Model model){
         
         DatosVista datosVista = new DatosVista(user, "index", "Menú", false);
-        log.info(datosVista.toString());
+        //log.info(datosVista.toString());
         model.addAttribute("datosVista", datosVista);
         return "index";
     }

@@ -9,6 +9,7 @@
         <nav>
             <ol class="breadcrumb">
             <li class="breadcrumb-item"><a th:href="@{/dashboard}">Menu</a></li>
+            <li class="breadcrumb-item">Administrador</li>
             <li class="breadcrumb-item active">Usuarios</li>
             </ol>
         </nav>
@@ -24,7 +25,7 @@
                 <p class="m-1"></p>
                 
                 <!-- Multi Columns Form -->
-                <form th:id="saveUser" class="row g-3 needs-validation"
+                <form th:id="save" class="row g-3 needs-validation"
                     th:object="${usuario}" novalidate>
                     <input th:id="id" type="hidden" th:field="*{id}">
                     <div class="col-md-6">

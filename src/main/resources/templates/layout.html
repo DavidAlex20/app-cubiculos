@@ -43,6 +43,8 @@
   <script th:src="@{/assets/js/jquery-3.7.1.min.js}"></script>
 
   <script th:if="${datosVista.pagina == 'lista-usuarios'}" th:src="@{/assets/js/scripts-usuarios.js}"></script>
+  <script th:if="${datosVista.pagina == 'lista-cubiculos'}" th:src="@{/assets/js/scripts-cubiculos.js}"></script>
+  <script th:if="${datosVista.pagina == 'lista-eventos'}" th:src="@{/assets/js/scripts-eventos.js}"></script>
 </head>
 
 <body>
@@ -122,7 +124,7 @@
     </li><!-- End Dashboard Nav -->
 
     <li class="nav-item" th:if="${datosVista.role=='ADMIN'}">
-      <a th:class="${datosVista.pagina == 'lista-usuarios' ? 'nav-link' : 'nav-link collapsed' }" data-bs-target="#admin-nav" data-bs-toggle="collapse" href="#">
+      <a th:class="${datosVista.isAdmin == true ? 'nav-link' : 'nav-link collapsed' }" data-bs-target="#admin-nav" data-bs-toggle="collapse" href="#">
         <i class="bi bi-menu-button-wide"></i><span>Administrador</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul id="admin-nav" th:class="${datosVista.isAdmin == true ? 'nav-content collapse show' : 'nav-content collapse '}" data-bs-parent="#sidebar-nav">
@@ -130,6 +132,18 @@
         <li>
           <a th:class="${datosVista.pagina == 'lista-usuarios' ? 'nav-link active' : 'nav-link'}" th:href="@{/admin/usuarios}">
             <i class="bi bi-circle"></i><span>Usuarios</span>
+          </a>
+        </li>
+
+        <li>
+          <a th:class="${datosVista.pagina == 'lista-cubiculos' ? 'nav-link active' : 'nav-link'}" th:href="@{/admin/cubiculos}">
+            <i class="bi bi-circle"></i><span>Cubiculos</span>
+          </a>
+        </li>
+
+        <li>
+          <a th:class="${datosVista.pagina == 'lista-eventos' ? 'nav-link active' : 'nav-link'}" th:href="@{/admin/eventos}">
+            <i class="bi bi-circle"></i><span>Eventos</span>
           </a>
         </li>
 

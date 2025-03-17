@@ -14,7 +14,7 @@
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a th:href="@{/dashboard}">Menu</a></li>
           <li class="breadcrumb-item">Administrador</li>
-          <li class="breadcrumb-item active">Usuarios</li>
+          <li class="breadcrumb-item active">Cubiculos</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -24,7 +24,7 @@
         <div class="card-body">
           <div class="d-flex align-items-center">
             <h5 class="card-title" th:text="${datosVista.titulo}"></h5>
-            <a type="button" th:href="@{usuarios/crear}" class="btn btn-primary ms-auto">Crear</a>
+            <a type="button" th:href="@{cubiculos/crear}" class="btn btn-primary ms-auto">Crear</a>
           </div>
           <p class="m-1"></p>
 
@@ -32,30 +32,22 @@
             <thead>
               <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Nombre completo</th>
-                  <th scope="col">Usuario</th>
-                  <th scope="col">Correo</th>
-                  <th scope="col">Estatus</th>
-                  <th scope="col">Rol</th>
-                  <th scope="col">Activo</th>
+                  <th scope="col">Edificio</th>
+                  <th scope="col">Disponible</th>
                   <th scope="col">Opciones</th>
               </tr>
             </thead>
             <tbody>
-              <tr th:each="user: ${usuarios}">
-                  <td th:text="${user.numempleado}"></td>
-                  <td th:text="${user.nombres + ' ' + user.apellidos}"></td>
-                  <td th:text="${user.username}"></td>
-                  <td th:text="${user.email}"></td>
-                  <td th:text="${user.status}"></td>
-                  <td th:text="${user.role}"></td>
-                  <td th:text="${user.activo == true ? 'Sí' : 'No'}"></td>
+              <tr th:each="cubi: ${cubiculos}">
+                  <td th:text="${cubi.numero}"></td>
+                  <td th:text="${cubi.edificio}"></td>
+                  <td th:text="${cubi.disponible == true ? 'Sí' : 'No'}"></td>
                   <td>
-                      <a type="button" th:href="@{usuarios/editar/} + ${user.id}" class="btn btn-secondary" 
+                      <a type="button" th:href="@{cubiculos/editar/} + ${cubi.id}" class="btn btn-secondary" 
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
                         <i class="bi bi-pencil-square"></i>
                       </a>
-                      <a type="button" th:id="${user.id}" href="#" class="btn btn-danger delete" 
+                      <a type="button" th:id="${cubi.id}" href="#" class="btn btn-danger delete" 
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
                         <i class="bi bi-trash"></i>
                       </a>

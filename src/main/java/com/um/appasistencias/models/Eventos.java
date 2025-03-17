@@ -1,19 +1,24 @@
 package com.um.appasistencias.models;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import org.springframework.data.annotation.Id;
 
 public class Eventos {
     @Id private String id;
     private String titulo;
     private String lugar;
-    private String inicio;
-    private String fin;
+    private LocalTime inicio;
+    private LocalTime fin;
+    private LocalDate fecha;
 
-    public Eventos(String titulo, String lugar, String inicio, String fin) {
+    public Eventos(String titulo, String lugar, LocalTime inicio, LocalTime fin, LocalDate fecha) {
         this.titulo = titulo;
         this.lugar = lugar;
         this.inicio = inicio;
         this.fin = fin;
+        this.fecha = fecha;
     }
 
     public String getId() {
@@ -40,20 +45,28 @@ public class Eventos {
         this.lugar = lugar;
     }
 
-    public String getInicio() {
+    public LocalTime getInicio() {
         return inicio;
     }
 
-    public void setInicio(String inicio) {
+    public void setInicio(LocalTime inicio) {
         this.inicio = inicio;
     }
 
-    public String getFin() {
+    public LocalTime getFin() {
         return fin;
     }
 
-    public void setFin(String fin) {
+    public void setFin(LocalTime fin) {
         this.fin = fin;
+    }
+
+    public LocalDate getFecha() {
+        return this.fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
     }
 
     @Override
