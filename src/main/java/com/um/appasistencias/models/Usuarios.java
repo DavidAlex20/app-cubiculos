@@ -2,6 +2,7 @@ package com.um.appasistencias.models;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public class Usuarios implements UserDetails {
 
-    @Id private String id;
+    @Id private UUID id;
     private String username;
     private String password;
     private String role;
@@ -56,11 +57,11 @@ public class Usuarios implements UserDetails {
         this.username = username;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

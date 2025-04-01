@@ -5,50 +5,71 @@
   <main id="main" class="main" layout:fragment="body">
 
     <div class="pagetitle">
-      <h1>Horario de clases</h1>
+      <h1 th:text="${datosVista.titulo}"></h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a th:href="@{/}">Menu</a></li>
-          <li class="breadcrumb-item active">Horario del día</li>
+          <li class="breadcrumb-item active">Inicio</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
 
     <section class="section dashboard">
-      <div class="col-xl-12">
+      <input type="hidden" id="usuario" th:value="${datosVista.usuario}">
 
-        <!-- Horario actual -->
-        <div class="card info-card">
-          <div class="card-body">
-
-            <h5 class="card-title">Clase siguiente <br><span>De 14:00 a 15:50 | Dos periodos</span></h5>
-
-            <div class="d-flex align-items-center">
-              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" 
-              style="color: #ff771d; background: #ffecdf;" data-bs-toggle="tooltip" data-bs-placement="top" 
-              title="Clase en curso">
-                <i class="bi bi-clock-history"></i>
-              </div>
-              <div class="ps-3">
-                <h6>Introduccion a la programacion</h6>
-                <span class="text-danger small pt-1 fw-bold">Aula #201</span> -<span class="text-muted small pt-2 ps-1">1er semestre</span>
-              </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <h4 class="card-title">Pase de lista</h4>
+            <div class="ms-auto">
+              <a type="button" href="#" class="btn btn-primary ms-auto"><i class="bi bi-calendar-week"></i>Calendario</a>
+              <a type="button" href="#" class="btn btn-secondary ms-auto"><i class="bi bi-clipboard-data"></i>Reportes</a>
             </div>
-
           </div>
+          <p class="m-1"></p>
+
+          <div th:if="${eventos != null}">
+            <h5>Listado de eventos</h5>
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                    <th scope="col">Titulo</th>
+                    <th scope="col">Lugar</th>
+                    <th scope="col">Horario</th>
+                    <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="eve: ${eventos}">
+                    <td th:text="${eve.titulo}"></td>
+                    <td th:text="${eve.lugar}"></td>
+                    <td th:text="${eve.inicio + ' - ' + eve.fin}"></td>
+                    <td>
+                        <input type="hidden" id="pasinicio" th:value="${eve.pasinicio}">
+                        <input type="hidden" id="pasfin" th:value="${eve.pasfin}">
+                        <!-- EDITAR BOTONES Y CREAR FUNCIONES PROPIAS POR HERRAMIENTA (INICIAR, FINALIZAR, Y TERMINADO ) -->
+                        <a type="button" th:id="${eve.id}" href="#" class="btn paseevento btn-secondary" th:if="${eve.estado == 0}">
+                          <i class="bi bi-clipboard-check paseevento"></i>
+                          Comenzar
+                        </a>
+
+                        <a type="button" th:id="${eve.id}" href="#" class="btn paseevento btn-warning" th:if="${eve.estado == 1}">
+                          <i class="bi bi-clipboard-check paseevento"></i>
+                          Terminar
+                        </a>
+
+                        <a type="button" th:id="${eve.id}" href="#" class="btn paseevento btn-success" th:if="${eve.estado == 2}">
+                          <i class="bi bi-clipboard-check paseevento"></i>
+                          Finalizado
+                        </a>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
         </div>
-        
-        <!-- Horarios por venir -->
-        <div class="card">
-
-          <div class="card-body">
-            <h5 class="card-title">Horario</h5>
-
-            
-          </div>
-        </div><!-- End Recent Activity -->
-
-      </div><!-- End Customers Card -->
+      </div>
     </section>
 
   </main><!-- End #main -->

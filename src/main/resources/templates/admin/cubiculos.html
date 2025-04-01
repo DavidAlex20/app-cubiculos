@@ -31,9 +31,10 @@
           <table class="table table-bordered table-striped">
             <thead>
               <tr>
-                  <th scope="col">#</th>
+                  <th scope="col"># Cubiculo</th>
                   <th scope="col">Edificio</th>
                   <th scope="col">Disponible</th>
+                  <th scope="col">Asignacion</th>
                   <th scope="col">Opciones</th>
               </tr>
             </thead>
@@ -41,8 +42,16 @@
               <tr th:each="cubi: ${cubiculos}">
                   <td th:text="${cubi.numero}"></td>
                   <td th:text="${cubi.edificio}"></td>
-                  <td th:text="${cubi.disponible == true ? 'Sí' : 'No'}"></td>
                   <td>
+                    <a th:if="${cubi.disponible == true}" href="#" th:id="${cubi.id}" class="btn btn-success disponible">Disponible</a>
+                    <a th:if="${cubi.disponible == false}" href="#" th:id="${cubi.id}" class="btn btn-danger disponible">No disponible</a>
+                  </td>
+                  <td th:text="${cubi.nombres + ' ' + cubi.apellidos}"></td>
+                  <td>
+                      <a type="button" href="#" class="btn btn-primary cubid" th:id="${cubi.id}"
+                      data-bs-toggle="modal" data-bs-target="#modal" title="Asignar maestro">
+                        <i class="bi bi-person-lines-fill"></i>
+                      </a>
                       <a type="button" th:href="@{cubiculos/editar/} + ${cubi.id}" class="btn btn-secondary" 
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
                         <i class="bi bi-pencil-square"></i>
@@ -55,6 +64,39 @@
               </tr>
             </tbody>
           </table>
+
+          <input type="hidden" id="cubid" value="0">
+          <div class="modal fade" id="modal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Asignar maestro</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <table class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Maestro</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr th:each="usu: ${usuarios}">
+                        <td th:text="${usu.nombres + ' ' + usu.apellidos}"></td>
+                        <td>
+                          <a href="#" th:id="${usu.id}" class="btn btn-primary asignar">Asignar</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+              </div>
+            </div>
+          </div><!-- End Modal Dialog Scrollable-->
         </div>
       </div>
     </section>

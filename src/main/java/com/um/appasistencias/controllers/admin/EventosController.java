@@ -44,7 +44,7 @@ public class EventosController {
     @GetMapping("/crear")
     public String crear(@AuthenticationPrincipal Usuarios user, Model model){
         Eventos evento = new Eventos("", "", null, null, null);
-        evento.setId("0");
+        evento.setId(null);
         DatosVista datosVista = new DatosVista(user, "lista-eventos", "Listado de eventos", true);
         model.addAttribute("evento", evento);
         model.addAttribute("datosVista", datosVista);
@@ -52,7 +52,7 @@ public class EventosController {
     }
 
     @GetMapping("/editar/{id}")
-    public Mono<String> editar(@AuthenticationPrincipal Usuarios user, @PathVariable String id, Model model){
+    public Mono<String> editar(@AuthenticationPrincipal Usuarios user, @PathVariable UUID id, Model model){
         //Mono<Eventos> evento = 
         return eventosService.findById(id).map(EventosDto::new)
         .doOnNext(evento -> {
@@ -65,13 +65,13 @@ public class EventosController {
     // API RESPONSE
     @PostMapping("/guardar")
     public Mono<ResponseEntity<String>> guardar(@ModelAttribute Eventos evento){
-        String uuid = evento.getId();
+        UUID uuid = evento.getId();
         log.info(evento.toString());
         boolean valid = true;
-        if(!uuid.equals("0")){
+        if(uuid != null){
             log.info("Verificando uuid");
             try {
-                UUID.fromString(uuid);
+                eventosService.findById(uuid);
             } catch (Exception e) {
                 log.error(e.getMessage());
                 valid = false;
@@ -113,7 +113,7 @@ public class EventosController {
     }
 
     @GetMapping("/eliminar")
-    public Mono<ResponseEntity<String>> eliminar(@RequestParam String id) {
+    public Mono<ResponseEntity<String>> eliminar(@RequestParam UUID id) {
         try {
             log.info("Realizando eliminacion");
             return eventosService.findById(id)

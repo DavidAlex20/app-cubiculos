@@ -2,11 +2,12 @@ package com.um.appasistencias.models;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
 
 public class Eventos {
-    @Id private String id;
+    @Id private UUID id;
     private String titulo;
     private String lugar;
     private LocalTime inicio;
@@ -21,11 +22,11 @@ public class Eventos {
         this.fecha = fecha;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

@@ -4,7 +4,7 @@ import com.um.appasistencias.models.Usuarios;
 
 public class DatosVista {
     // datos de ususario en sesion
-    private String userId;
+    private String usuario;
     private String nombres;
     private String apellidos;
     private String numempleado;
@@ -18,7 +18,7 @@ public class DatosVista {
     private boolean admin = false;
 
     public DatosVista(Usuarios user, String page, String titulo, boolean isAdmin) {
-        this.userId = user.getId();
+        this.usuario = user.getUsername();
         this.nombres = user.getNombres();
         this.apellidos = user.getApellidos();
         this.numempleado = user.getNumempleado();
@@ -42,8 +42,8 @@ public class DatosVista {
         return result;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUsuario() {
+        return usuario;
     }
 
     public String getNombres() {
@@ -84,7 +84,7 @@ public class DatosVista {
 
     @Override
     public String toString() {
-        return "DatosVista [userId=" + userId + ", nombres=" + nombres + ", apellidos=" + apellidos + ", numempleado="
+        return "DatosVista [usuario=" + usuario + ", nombres=" + nombres + ", apellidos=" + apellidos + ", numempleado="
                 + numempleado + ", role=" + role + ", status=" + status + ", nombreicon=" + nombreicon + ", pagina=" + pagina + ", titulo=" + titulo + ", admin="
                 + admin + "]";
     }

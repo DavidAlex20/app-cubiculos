@@ -11,7 +11,7 @@ import com.um.appasistencias.models.Usuarios;
 import reactor.core.publisher.Mono;
 
 @Repository
-public interface UsuariosRepository extends R2dbcRepository<Usuarios, String> {
+public interface UsuariosRepository extends R2dbcRepository<Usuarios, UUID> {
     Mono<Usuarios> findByUsername(String username);
 
     @Query("SELECT * FROM usuarios WHERE id = :id ;")

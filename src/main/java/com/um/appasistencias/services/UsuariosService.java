@@ -25,30 +25,26 @@ public class UsuariosService implements ReactiveUserDetailsService {
         return usuariosRepository.findAll();
     }
 
-    public Mono<Usuarios> findById(String id) {
-        UUID uuid = UUID.fromString(id);
-        return usuariosRepository.findByUuid(uuid);
+    public Mono<Usuarios> findById(UUID id) {
+        return usuariosRepository.findByUuid(id);
     }
 
-    public Mono<Void> deleteById(String id) {
-        UUID uuid = UUID.fromString(id);
-        return usuariosRepository.deleteByUuid(uuid);
+    public Mono<Void> deleteById(UUID id) {
+        return usuariosRepository.deleteByUuid(id);
     }
 
-    public Mono<Boolean> exists(String id) {
+    public Mono<Boolean> exists(UUID id) {
         try {
-            UUID uuid = UUID.fromString(id);
-            return usuariosRepository.exists(uuid);
+            return usuariosRepository.exists(id);
         } catch (Exception e) {
             return Mono.just(false);
         }
     }
 
-    public Mono<Usuarios> update(String id, Usuarios user) {
-        UUID uuid = UUID.fromString(id);
+    public Mono<Usuarios> update(UUID id, Usuarios user) {
         return usuariosRepository.update(
             user.getUsername(), passwordEncoder.encode(user.getPassword()), user.getRole(), user.getNombres(), user.getApellidos(),
-            user.getNumempleado(), user.getStatus(), user.isActivo(), user.getEmail(), uuid
+            user.getNumempleado(), user.getStatus(), user.isActivo(), user.getEmail(), id
         );
     }
 

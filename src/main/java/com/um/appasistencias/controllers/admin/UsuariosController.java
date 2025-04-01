@@ -45,7 +45,7 @@ public class UsuariosController {
     @GetMapping("/crear")
     public String crear(@AuthenticationPrincipal Usuarios user, Model model) {
         Usuarios usuario = new Usuarios("", "", "USER", "", "", "", "", true, "");
-        usuario.setId("0");
+        usuario.setId(null);
         model.addAttribute("usuario", usuario);
         DatosVista datosVista = new DatosVista(user, "lista-usuarios", "Registrar nuevo usuario", true);
         //log.info(datosVista.toString());
@@ -54,7 +54,7 @@ public class UsuariosController {
     }
 
     @GetMapping("/editar/{id}")
-    public String editar(@AuthenticationPrincipal Usuarios user, @PathVariable String id, Model model) {
+    public String editar(@AuthenticationPrincipal Usuarios user, @PathVariable UUID id, Model model) {
         Mono<Usuarios> usuario = usuariosService.findById(id);
         model.addAttribute("usuario", usuario);
         DatosVista datosVista = new DatosVista(user, "lista-usuarios", "Editar usuario", true);
@@ -66,13 +66,13 @@ public class UsuariosController {
     // API RESPONSE
     @PostMapping("/guardar")
     public Mono<ResponseEntity<String>> guardar(@ModelAttribute Usuarios usuario) {
-        String uuid = usuario.getId();
+        UUID uuid = usuario.getId();
         log.info(usuario.toString());
         boolean valid = true; 
-        if(!uuid.equals("0")){
+        if(uuid != null){
             log.info("Verificando uuid");
             try {
-                UUID.fromString(usuario.getId());
+                usuariosService.findById(uuid);
             } catch (IllegalArgumentException e) {
                 log.error(e.getMessage());
                 valid = false;
@@ -116,7 +116,7 @@ public class UsuariosController {
     
 
     @GetMapping("/eliminar")
-    public Mono<ResponseEntity<String>> eliminar(@RequestParam String id) {
+    public Mono<ResponseEntity<String>> eliminar(@RequestParam UUID id) {
         try {
             log.info("Realizando eliminacion");
             return usuariosService.findById(id)

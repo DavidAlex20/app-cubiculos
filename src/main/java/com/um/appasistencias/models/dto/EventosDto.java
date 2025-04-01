@@ -2,11 +2,12 @@ package com.um.appasistencias.models.dto;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 import com.um.appasistencias.models.Eventos;
 
 public class EventosDto {
-    private String id;
+    private UUID id;
     private String titulo;
     private String lugar;
     private LocalTime inicio;
@@ -24,11 +25,11 @@ public class EventosDto {
         this.fecha = evento.getFecha().format(formatter);
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -70,10 +71,6 @@ public class EventosDto {
 
     public void setFecha(String fecha) {
         this.fecha = fecha;
-    }
-
-    public static DateTimeFormatter getFormatter() {
-        return formatter;
     }
 
     @Override

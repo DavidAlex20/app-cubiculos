@@ -1,21 +1,23 @@
-package com.um.appasistencias.models;
+package com.um.appasistencias.models.dto;
 
 import java.util.UUID;
 
-import org.springframework.data.annotation.Id;
-
-public class Cubiculos {
-    @Id private UUID id;
+public class CubiculosDto {
+    private UUID id;
     private int numero;
     private String edificio;
     private boolean disponible;
     private UUID asignacion = null;
+    private String nombres;
+    private String apellidos;
 
-    public Cubiculos(int numero, String edificio, boolean disponible, UUID asignacion) {
+    public CubiculosDto(int numero, String edificio, boolean disponible, UUID asignacion, String nombres, String apellidos) {
         this.numero = numero;
         this.edificio = edificio;
         this.disponible = disponible;
         this.asignacion = asignacion;
+        this.nombres = nombres;
+        this.apellidos = apellidos;
     }
 
     public UUID getId() {
@@ -58,9 +60,26 @@ public class Cubiculos {
         this.asignacion = asignacion;
     }
 
+    public String getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
     @Override
     public String toString() {
-        return "Cubiculos [id=" + id + ", numero=" + numero + ", edificio=" + edificio + ", disponible=" + disponible + ", asignacion=" + asignacion
+        return "Cubiculos [id=" + id + ", numero=" + numero + ", edificio=" + edificio + ", disponible=" + disponible + ", asignacion=" 
+                + asignacion + ", nombres=" + nombres + ", apellidos=" + apellidos
                 + "]";
     }
 }

@@ -42,7 +42,6 @@ $(document).ready(function() {
     $('#save').submit(function(event) {
       event.preventDefault();
 
-      let id = $('#id').val();
       let username = $('#username').val();
       let password = $('#password').val();
       let role = $('#role').val();
@@ -54,7 +53,6 @@ $(document).ready(function() {
       let email = $('#email').val();
 
       if (
-        id === undefined || id === null || id === "" ||
         username === undefined || username === null || username === "" ||
         password === undefined || password === null || password === "" ||
         role === undefined || role === null || role === "" ||
