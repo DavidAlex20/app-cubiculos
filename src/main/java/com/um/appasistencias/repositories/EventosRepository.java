@@ -24,11 +24,14 @@ public interface EventosRepository extends R2dbcRepository<Eventos, UUID>{
     @Query("SELECT * FROM eventos WHERE fecha = CURRENT_DATE;")
     Flux<Eventos> findAllToday();
 
-    @Query("DELETE FROM eventos WHERE id = : id ;")
+    @Query("DELETE FROM eventos WHERE id = :id ;")
     Mono<Void> deleteByUuid(@Param("id") UUID uuid);
 
     @Query("SELECT EXISTS (SELECT 1 FROM eventos WHERE id = :id);")
     Mono<Boolean> exists(@Param("id") UUID uuid);
+
+    @Query("SELECT EXISTS (SELECT 1 FROM eventos WHERE fecha = :fecha);")
+    Mono<Boolean> existsToday(@Param("fecha") LocalDate fecha);
 
     @Query(
         "UPDATE eventos "+
@@ -45,21 +48,17 @@ public interface EventosRepository extends R2dbcRepository<Eventos, UUID>{
     );
 
     @Query(
-        "SELECT eve.id, eve.titulo, eve.lugar, eve.inicio, eve.fin, eve.fecha, pas.inicio AS pasinicio, pas.fin AS pasfin " + //
-        "    COALESCE(     " + //
-        "        CASE " + //
-        "            WHEN pas.inicio IS NULL AND pas.fin IS NULL THEN 0 " + //
-        "            WHEN pas.inicio IS NOT NULL AND pas.fin IS NULL THEN 1 " + //
-        "            WHEN pas.inicio IS NOT NULL AND pas.fin IS NOT NULL THEN 2 " + //
-        "        END, " + //
-        "        0  " + //
-        "    ) AS estado " + //
-        "FROM usuarios AS usu " + //
-        "CROSS JOIN eventos AS eve  " + //
-        "LEFT JOIN paselista AS pas  " + //
-        "ON eve.id = pas.evento AND usu.id = pas.usuario " + //
-        "WHERE usu.id = :usuario AND eve.fecha = :fecha " + //
-        "ORDER BY eve.inicio;"
+        "SELECT\r\n" + //
+        "    eventos.id, eventos.titulo, eventos.lugar, eventos.inicio, eventos.fin, eventos.fecha,\r\n" + //
+        "    CASE \r\n" + //
+        "        WHEN paselista.id IS NOT NULL THEN TRUE\r\n" + //
+        "        ELSE FALSE\r\n" + //
+        "    END AS participacion,\r\n" + //
+        "    paselista.inicio AS participacioninicio,\r\n" + //
+        "    paselista.fin AS participacionfin\r\n" + //
+        "FROM eventos\r\n" + //
+        "LEFT JOIN paselista ON eventos.id = paselista.evento AND paselista.usuario = :usuario "+
+        "WHERE eventos.fecha = CURRENT_DATE ;"
     )
-    Flux<EventosEstado> findByUserWithState(@Param("usuario") UUID usuario, @Param("fecha") LocalDate fecha);
+    Flux<EventosEstado> findByUserWithState(@Param("usuario") UUID usuario);
 }

@@ -20,53 +20,98 @@
       <div class="card">
         <div class="card-body">
           <div class="d-flex align-items-center">
-            <h4 class="card-title">Pase de lista</h4>
+            <h4 class="card-title">Pase de lista<br><span th:text="'Cubiculo #' + ${cubiculo.numero} + ' | ' + ${cubiculo.edificio}"></span></h4>
             <div class="ms-auto">
-              <a type="button" href="#" class="btn btn-primary ms-auto"><i class="bi bi-calendar-week"></i>Calendario</a>
-              <a type="button" href="#" class="btn btn-secondary ms-auto"><i class="bi bi-clipboard-data"></i>Reportes</a>
+              <a type="button" href="#" class="btn btn-primary ms-auto"><i class="bi bi-clipboard-data"></i>Reportes</a>
             </div>
           </div>
           <p class="m-1"></p>
 
-          <div th:if="${eventos != null}">
-            <h5>Listado de eventos</h5>
-            <table class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                    <th scope="col">Titulo</th>
-                    <th scope="col">Lugar</th>
-                    <th scope="col">Horario</th>
-                    <th scope="col"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr th:each="eve: ${eventos}">
-                    <td th:text="${eve.titulo}"></td>
-                    <td th:text="${eve.lugar}"></td>
-                    <td th:text="${eve.inicio + ' - ' + eve.fin}"></td>
-                    <td>
-                        <input type="hidden" id="pasinicio" th:value="${eve.pasinicio}">
-                        <input type="hidden" id="pasfin" th:value="${eve.pasfin}">
-                        <!-- EDITAR BOTONES Y CREAR FUNCIONES PROPIAS POR HERRAMIENTA (INICIAR, FINALIZAR, Y TERMINADO ) -->
-                        <a type="button" th:id="${eve.id}" href="#" class="btn paseevento btn-secondary" th:if="${eve.estado == 0}">
-                          <i class="bi bi-clipboard-check paseevento"></i>
-                          Comenzar
-                        </a>
+            <div class="ms-auto">
+              <button th:if="${paselista.inicio == null && paselista.fin == null}" class="btn btn-primary btn-lg btn-cubiculo">
+                <i class="bi bi-clock"></i>
+                Comenzar
+              </button>
 
-                        <a type="button" th:id="${eve.id}" href="#" class="btn paseevento btn-warning" th:if="${eve.estado == 1}">
-                          <i class="bi bi-clipboard-check paseevento"></i>
-                          Terminar
-                        </a>
+              <button th:if="${paselista.inicio != null && paselista.fin == null}" class="btn btn-danger btn-lg btn-cubiculo">
+                <i class="bi bi-clock"></i>
+                Terminar
+              </button>
 
-                        <a type="button" th:id="${eve.id}" href="#" class="btn paseevento btn-success" th:if="${eve.estado == 2}">
-                          <i class="bi bi-clipboard-check paseevento"></i>
-                          Finalizado
-                        </a>
-                    </td>
-                </tr>
-              </tbody>
-            </table>
+              <button th:if="${paselista.inicio != null && paselista.fin != null}" class="btn btn-success btn-lg">
+                <i class="bi bi-clock"></i>
+                Finalizado
+              </button>
+
+              <button th:if="${paselista.pausainicio == null && paselista.pausafin == null && paselista.fin == null}" class="btn btn-outline-secondary btn-lg btn-pausa">
+                <i class="bi bi-pause-fill"></i>
+                Pausar
+              </button>
+
+              <button th:if="${paselista.pausainicio != null && paselista.pausafin == null && paselista.fin == null}" class="btn btn-outline-warning btn-lg btn-pausa">
+                <i class="bi bi-pause-fill"></i>
+                Reanudar
+              </button>
+            </div>
+
           </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <h4 class="card-title">Listado de eventos</h4>
+            <div class="ms-auto">
+              <a type="button" href="#" class="btn btn-primary ms-auto"><i class="bi bi-calendar-week"></i>Calendario</a>
+            </div>
+          </div>
+          <p class="m-1"></p>
+
+          <div th:if="${eventosToday == false}" class="alert alert-secondary alert-dismissible fade show" role="alert">
+            <i class="bi bi-calendar2-x me-1"></i>
+            ¡No hay eventos agendados el día de hoy!
+            <!--
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            -->
+          </div>
+
+          <table th:if="${eventosToday != false}" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                  <th scope="col">Titulo</th>
+                  <th scope="col">Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="eve: ${eventos}">
+                  <td>
+                    <p th:text="${eve.titulo}"></p>
+                    <p><span th:text="${eve.lugar} + ' | ' + ${eve.inicio + ' - ' + eve.fin}"></span></p>
+                  </td>
+                  <td>
+                      <a type="button" th:id="${eve.id}" href="#" class="btn btn-secondary btn-evento" 
+                      th:if="${eve.participacion == false && eve.participacioninicio == null && eve.participacionfin == null}">
+                        <i class="bi bi-clipboard-check"></i>
+                        Comenzar
+                      </a>
+
+                      <a type="button" th:id="${eve.id}" href="#" class="btn btn-warning btn-evento" 
+                      th:if="${eve.participacion != false && eve.participacioninicio != null && eve.participacionfin == null}">
+                        <i class="bi bi-clipboard-check"></i>
+                        Terminar
+                      </a>
+
+                      <a type="button" th:id="${eve.id}" href="#" class="btn btn-success" 
+                      th:if="${eve.participacion != false && eve.participacioninicio != null && eve.participacionfin != null}">
+                        <i class="bi bi-clipboard-check"></i>
+                        Finalizado
+                      </a>
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+          
 
         </div>
       </div>

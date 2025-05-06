@@ -13,10 +13,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.um.appasistencias.models.Cubiculos;
+import com.um.appasistencias.models.Paselista;
 import com.um.appasistencias.models.Usuarios;
 import com.um.appasistencias.models.dto.DatosVista;
 import com.um.appasistencias.models.dto.EventosEstado;
 import com.um.appasistencias.repositories.UsuariosRepository;
+import com.um.appasistencias.services.CubiculosService;
 import com.um.appasistencias.services.EventosService;
 import com.um.appasistencias.services.PaselistaService;
 
@@ -25,7 +28,6 @@ import reactor.core.publisher.Mono;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @Controller
 @RequestMapping("/dashboard")
 public class HomeController {
@@ -33,6 +35,7 @@ public class HomeController {
     @Autowired PaselistaService paselistaService;
     @Autowired EventosService eventosService;
     @Autowired UsuariosRepository usuariosRepository;
+    @Autowired CubiculosService cubiculosService;
 
     @GetMapping
     public Mono<String> index(@AuthenticationPrincipal Usuarios user, Model model){
@@ -41,53 +44,88 @@ public class HomeController {
             DatosVista datosVista = new DatosVista(user, "index", "Inicio", false);
             log.info(datosVista.toString());
             model.addAttribute("datosVista", datosVista);
+
             Flux<EventosEstado> eventos = eventosService.findByUserWithState(u.getId());
             model.addAttribute("eventos", eventos);
+            
+            Mono<Boolean> eventosToday = eventosService.existsToday();
+            model.addAttribute("eventosToday", eventosToday);
+
+            Mono<Cubiculos> cubiculo = cubiculosService.findByAsignacion(u.getId());
+            model.addAttribute("cubiculo", cubiculo);
+
+            Mono<Paselista> paselista = paselistaService.cubiculoExistente(u.getId());
+            model.addAttribute("paselista", paselista);
             return Mono.just("index");
         });
-        
     }
 
     // API RESPONSE
-    @GetMapping("/paselista")
-    public Mono<ResponseEntity<String>> paselista(@RequestParam String usuario, @RequestParam UUID id) {
+    @GetMapping("/evento")
+    public Mono<ResponseEntity<String>> evento(@RequestParam String usuario, @RequestParam UUID evento) {
         try {
-            return paselistaService.findByType(usuario, id)
-            .flatMap(exists -> {
-                if(exists) {
-                    return paselistaService.findByTypeData(usuario, id)
-                    .flatMap(data -> {
-                        if(data.getInicio() != null && data.getFin() == null) {
-                            paselistaService.updateByType(usuario, id)
-                            .flatMap(pass -> {
-                                log.info(pass.toString());
-                                return Mono.just(ResponseEntity.status(HttpStatus.OK).body("Pase de lista finalizado."));
-                            })
-                            .onErrorResume(error -> {
-                                log.error(error.getMessage());
-                                return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se pudo finalizar el pase de lista."));
-                            });
-                        } else if (data.getInicio() != null && data.getFin() != null) {
-                            return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pase de lista ya finalizado."));
-                        }
-                        return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error en los datos!"));
-                        
-                    });
-                } else {
-                    return paselistaService.createByType(usuario, id)
-                    .flatMap(pass -> {
-                        log.info(pass.toString());
-                        return Mono.just(ResponseEntity.status(HttpStatus.OK).body("Pase de lista iniciado."));
-                    })
-                    .onErrorResume(error -> {
-                        log.error(error.getMessage());
-                        return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se pudo iniciar el pase de lista."));
-                    });
-                }
+            log.info("ENVIANDO DATOS DE EVENTO");
+            return paselistaService.eventoRegistro(usuario, evento).flatMap(pase -> {
+                log.info(pase.toString());
+                return Mono.just(ResponseEntity.status(HttpStatus.OK).body("Evento: Pase de lista marcado!"));
+            })
+            .onErrorResume(error -> {
+                log.error(error.getMessage());
+                return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .header("Content-Type", "text/plain")  
+                    .body("Error al marcar el pase de lista!"));
             });
         } catch (Exception e) {
-            return Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error inesperado!"));
+            log.error(e.getMessage());
+            return Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .header("Content-Type", "text/plain")
+                .body("Hubo un error inesperado."));
+        }
+    }
+
+    @GetMapping("/cubiculo")
+    public Mono<ResponseEntity<String>> cubiculo(@RequestParam String usuario) {
+        try {
+            log.info("ENVIANDO DATOS DE CUBICULO");
+            return paselistaService.cubiculoRegistro(usuario).flatMap(pase -> {
+                log.info(pase.toString());
+                return Mono.just(ResponseEntity.status(HttpStatus.OK).body("Cubiculo: Pase de lista marcado!"));
+            })
+            .onErrorResume(error -> {
+                log.error(error.getMessage());
+                return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .header("Content-Type", "text/plain")  
+                    .body("Error al marcar el pase de lista!"));
+            });
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .header("Content-Type", "text/plain")
+                .body("Hubo un error inesperado."));
+        }
+    }
+
+    @GetMapping("/pausa")
+    public Mono<ResponseEntity<String>> pausa(@RequestParam String usuario) {
+        try {
+            log.info("ENVIANDO DATOS PARA PAUSAR");
+            return paselistaService.cubiculoPausa(usuario).flatMap(pase -> {
+                log.info(pase.toString());
+                return Mono.just(ResponseEntity.status(HttpStatus.OK).body("Cubiculo: Pausa actualizada!"));
+            })
+            .onErrorResume(error -> {
+                log.error(error.getMessage());
+                return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .header("Content-Type", "text/plain")  
+                    .body("Error al pausar!"));
+            });
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .header("Content-Type", "text/plain")
+                .body("Hubo un error inesperado."));
         }
     }
     
+
 }

@@ -12,17 +12,12 @@ public class Reportes {
     private LocalDate semanainicio;
     private LocalDate semanafin;
     private Duration puntuales;
-    private Duration impuntuales;
-    private int faltas;
 
-    public Reportes(UUID usuario, LocalDate semanainicio, LocalDate semanafin, Duration puntuales, Duration impuntuales,
-            int faltas) {
+    public Reportes(UUID usuario, LocalDate semanainicio, LocalDate semanafin, Duration puntuales) {
         this.usuario = usuario;
         this.semanainicio = semanainicio;
         this.semanafin = semanafin;
         this.puntuales = puntuales;
-        this.impuntuales = impuntuales;
-        this.faltas = faltas;
     }
 
     public UUID getId() {
@@ -65,26 +60,10 @@ public class Reportes {
         this.puntuales = puntuales;
     }
 
-    public Duration getImpuntuales() {
-        return impuntuales;
-    }
-
-    public void setImpuntuales(Duration impuntuales) {
-        this.impuntuales = impuntuales;
-    }
-
-    public int getFaltas() {
-        return faltas;
-    }
-
-    public void setFaltas(int faltas) {
-        this.faltas = faltas;
-    }
-
     @Override
     public String toString() {
         return "Reportes [id=" + id + ", usuario=" + usuario + ", semanainicio=" + semanainicio + ", semanafin="
-                + semanafin + ", puntuales=" + puntuales + ", impuntuales=" + impuntuales + ", faltas=" + faltas + "]";
+                + semanafin + ", puntuales=" + puntuales + "]";
     }
 
 }

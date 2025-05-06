@@ -58,6 +58,10 @@ public class CubiculosService {
         );
     }
 
+    public Mono<Cubiculos> findByAsignacion(UUID asignacion){
+        return cubiculosRepository.findByAsignacion(asignacion);
+    }
+
     public Mono<Cubiculos> save(int numero, String edificio, boolean disponible, UUID asignacion) {
         return cubiculosRepository.save(new Cubiculos(numero, edificio, disponible, asignacion));      
     }

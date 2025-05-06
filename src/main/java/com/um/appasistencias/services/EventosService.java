@@ -44,6 +44,11 @@ public class EventosService {
         }
     }
 
+    public Mono<Boolean> existsToday() {
+        LocalDate fecha = LocalDate.now();
+        return eventosRepository.existsToday(fecha);
+    }
+
     public Mono<Eventos> update(UUID id, Eventos evento){
         return eventosRepository.update(
             evento.getTitulo(), evento.getLugar(), evento.getInicio(), evento.getFin(), evento.getFecha(), id
@@ -55,7 +60,6 @@ public class EventosService {
     }
 
     public Flux<EventosEstado> findByUserWithState(UUID usuario) {
-        LocalDate fecha = LocalDate.now();
-        return eventosRepository.findByUserWithState(usuario, fecha);
+        return eventosRepository.findByUserWithState(usuario);
     }
 }

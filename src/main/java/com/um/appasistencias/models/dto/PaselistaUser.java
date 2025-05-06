@@ -2,12 +2,10 @@ package com.um.appasistencias.models.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
-import com.um.appasistencias.models.Paselista;
-
-public class PaselistaDto {
+public class PaselistaUser {
+    // modelo
     private UUID id;
     private UUID usuario;
     private UUID evento = null;
@@ -15,20 +13,20 @@ public class PaselistaDto {
     private String fecha;
     private LocalTime inicio;
     private LocalTime fin;
-    private LocalTime pausainicio;
-    private LocalTime pausafin;
-
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-    public PaselistaDto(Paselista pase) {
-        this.usuario = pase.getUsuario();
-        this.evento = pase.getEvento();
-        this.cubiculo = pase.getCubiculo();
-        this.fecha = pase.getFecha().format(formatter);
-        this.inicio = pase.getInicio();
-        this.fin = pase.getFin();
-        this.pausainicio = pase.getPausainicio();
-        this.pausafin = pase.getPausafin();
+    //datos usuario
+    private String nombres;
+    private String apellidos;
+    
+    public PaselistaUser(UUID usuario, UUID evento, UUID cubiculo, String fecha, LocalTime inicio, LocalTime fin,
+            String nombres, String apellidos) {
+        this.usuario = usuario;
+        this.evento = evento;
+        this.cubiculo = cubiculo;
+        this.fecha = fecha;
+        this.inicio = inicio;
+        this.fin = fin;
+        this.nombres = nombres;
+        this.apellidos = apellidos;
     }
 
     public UUID getId() {
@@ -87,26 +85,26 @@ public class PaselistaDto {
         this.fin = fin;
     }
 
-    public LocalTime getPausainicio() {
-        return pausainicio;
+    public String getNombres() {
+        return nombres;
     }
 
-    public void setPausainicio(LocalTime pausainicio) {
-        this.pausainicio = pausainicio;
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
     }
 
-    public LocalTime getPausafin() {
-        return pausafin;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setPausafin(LocalTime pausafin) {
-        this.pausafin = pausafin;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
     @Override
     public String toString() {
         return "PaselistaDto [id=" + id + ", usuario=" + usuario + ", evento=" + evento + ", cubiculo=" + cubiculo
-                + ", fecha=" + fecha + ", inicio=" + inicio + ", fin=" + fin + ", pausainicio=" + pausainicio + ", pausafin=" + pausafin + "]";
+                + ", fecha=" + fecha + ", inicio=" + inicio + ", fin=" + fin + ", nombres=" + nombres + ", apellidos="
+                + apellidos + "]";
     }
-    
 }

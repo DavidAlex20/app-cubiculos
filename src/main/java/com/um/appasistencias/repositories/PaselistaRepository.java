@@ -1,7 +1,5 @@
 package com.um.appasistencias.repositories;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.UUID;
 
 import org.springframework.data.r2dbc.repository.Query;
@@ -14,68 +12,29 @@ import com.um.appasistencias.models.Paselista;
 import reactor.core.publisher.Mono;
 
 @Repository
-public interface PaselistaRepository extends R2dbcRepository<Paselista, UUID>{
-    @Query(
-        "SELECT * FROM paselista WHERE usuario= :usuario AND fecha= :fecha ;"
-    )
-    Mono<Paselista> findByUsuarioFecha(
-        @Param("usuario") UUID usuario,
-        @Param("fecha") LocalDate fecha
-    );
+public interface PaselistaRepository 
+extends R2dbcRepository<Paselista, UUID> {
+    /** CONSULTAS GENERALES */
+    @Query("UPDATE paselista SET fin = CURRENT_TIME WHERE id = :paselista ;")
+    public Mono<Paselista> paselistaTerminar(@Param("paselista") UUID paselista);
 
-    @Query("SELECT EXISTS (SELECT 1 FROM paselista WHERE usuario = :usuario AND cubiculo = :cubiculo AND fecha = :date );")
-    Mono<Boolean> findByCubiculo(@Param("usuario") UUID usuario, @Param("cubiculo") UUID id, @Param("date") LocalDate date);
+    @Query("UPDATE paselista SET pausainicio = CURRENT_TIME WHERE id = :paselista ;")
+    public Mono<Paselista> paselistaPausar(@Param("paselista") UUID paselista);
 
-    @Query("SELECT EXISTS (SELECT 1 FROM paselista WHERE usuario = :usuario AND evento = :evento AND fecha = :date );")
-    Mono<Boolean> findByEvento(@Param("usuario") UUID usuario, @Param("evento") UUID evento, @Param("date") LocalDate date);
+    @Query("UPDATE paselista SET pausafin = CURRENT_TIME WHERE id = :paselista ;")
+    public Mono<Paselista> paselistaReanudar(@Param("paselista") UUID paselista);
 
-    @Query("SELECT * FROM paselista WHERE usuario = :usuario AND cubiculo = :cubiculo AND fecha = :date ;")
-    Mono<Paselista> findByCubiculoData(@Param("usuario") UUID usuario, @Param("cubiculo") UUID id, @Param("date") LocalDate date);
+    /** CONSULTAS PARA REGISTROS DEL CUBICULO */
+    @Query("INSERT INTO paselista (usuario, cubiculo, inicio) VALUES (:usuario, :cubiculo, CURRENT_TIME) ;")
+    public Mono<Paselista> cubiculoIniciar(@Param("usuario") UUID usuario, @Param("cubiculo") UUID cubiculo);
 
-    @Query("SELECT * FROM paselista WHERE usuario = :usuario AND evento = :evento AND fecha = :date ;")
-    Mono<Paselista> findByEventoData(@Param("usuario") UUID usuario, @Param("evento") UUID evento, @Param("date") LocalDate date);
+    @Query("SELECT * FROM paselista WHERE usuario = :usuario AND cubiculo = :cubiculo AND fecha = CURRENT_DATE ;")
+    public Mono<Paselista> cubiculoExistente(@Param("usuario") UUID usuario, @Param("cubiculo") UUID cubiculo);
 
-    @Query(
-        "INSERT INTO paselista (usuario, cubiculo, fecha, inicio) \n"+
-        "VALUES(:usuario, :cubiculo, :fecha, :inicio);"
-    )
-    Mono<Paselista> createCubiculo(
-        @Param("usuario") UUID usuario,
-        @Param("cubiculo") UUID cubiculo,
-        @Param("fecha") LocalDate fecha,
-        @Param("inicio") LocalTime inicio
-    );
+    /** CONSULTAS PARA REGISTROS DE EVENTOS */
+    @Query("INSERT INTO paselista (usuario, evento, inicio) VALUES (:usuario, :evento, CURRENT_TIME) ;")
+    public Mono<Paselista> eventoIniciar(@Param("usuario") UUID usuario, @Param("evento") UUID evento);
 
-    @Query(
-        "INSERT INTO paselista (usuario, cubiculo, fecha, fin) \n"+
-        "VALUES(:usuario, :cubiculo, :fecha, :fin);"
-    )
-    Mono<Paselista> updateCubiculo(
-        @Param("usuario") UUID usuario,
-        @Param("cubiculo") UUID cubiculo,
-        @Param("fecha") LocalDate fecha,
-        @Param("fin") LocalTime fin
-    );
-
-    @Query(
-        "INSERT INTO paselista (usuario, evento, fecha, inicio) \n"+
-        "VALUES(:usuario, :evento, :fecha, :inicio);"
-    )
-    Mono<Paselista> createEvento(
-        @Param("usuario") UUID usuario,
-        @Param("evento") UUID evento,
-        @Param("fecha") LocalDate fecha,
-        @Param("inicio") LocalTime inicio
-    );
-
-    @Query(
-        "INSERT INTO paselista (usuario, evento, fecha, fin) \n"+
-        "VALUES(:usuario, :evento, :fecha, :fin);"
-    )
-    Mono<Paselista> updateEvento(
-        @Param("usuario") UUID usuario,
-        @Param("evento") UUID evento,
-        @Param("fecha") LocalDate fecha,
-        @Param("fin") LocalTime fin
-    );
+    @Query("SELECT * FROM paselista WHERE usuario = :usuario AND evento = :evento AND fecha = CURRENT_DATE ;")
+    public Mono<Paselista> eventoExistente(@Param("usuario") UUID usuario, @Param("evento") UUID evento);
 }
