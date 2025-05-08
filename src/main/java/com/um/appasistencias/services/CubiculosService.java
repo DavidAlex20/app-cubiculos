@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.um.appasistencias.models.Cubiculos;
-import com.um.appasistencias.models.dto.CubiculosDto;
+import com.um.appasistencias.models.dto.CubiculosAsignacion;
 import com.um.appasistencias.repositories.CubiculosRepository;
 
 import reactor.core.publisher.Flux;
@@ -20,7 +20,7 @@ public class CubiculosService {
         return cubiculosRepository.findAll();
     }
 
-    public Flux<CubiculosDto> findAllWithAsignacion() {
+    public Flux<CubiculosAsignacion> findAllWithAsignacion() {
         return cubiculosRepository.findAllWithAsignacion();
     }
 

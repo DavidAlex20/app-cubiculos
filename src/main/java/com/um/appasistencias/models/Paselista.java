@@ -6,8 +6,6 @@ import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
 
-import io.r2dbc.spi.Row;
-
 public class Paselista {
     @Id private UUID id;
     private UUID usuario;
@@ -20,6 +18,7 @@ public class Paselista {
     private LocalTime pausafin;
     
     public Paselista(){
+        this.id = null;
         this.usuario = null;
         this.evento = null;
         this.cubiculo = null;

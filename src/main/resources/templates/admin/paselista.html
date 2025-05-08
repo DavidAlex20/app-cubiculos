@@ -1,0 +1,73 @@
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}">
+<body>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <main id="main" class="main" layout:fragment="body">
+
+    <div class="pagetitle">
+      <h1 th:text="${datosVista.titulo}"></h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a th:href="@{/dashboard}">Menu</a></li>
+          <li class="breadcrumb-item">Administrador</li>
+          <li class="breadcrumb-item active">Pases de lista</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+  
+    <section class="section dashboard">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <h5 class="card-title" th:text="${datosVista.titulo}"></h5>
+            <a type="button" th:href="@{paselista/crear}" class="btn btn-primary ms-auto">Crear</a>
+          </div>
+          <p class="m-1"></p>
+
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                  <th scope="col">Usuario</th>
+                  <th scope="col">Cubiculo/Evento</th>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Iniciado</th>
+                  <th scope="col">Finalizado</th>
+                  <th scope="col">Pausa</th>
+                  <th scope="col">Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="pase: ${paselista}">
+                  <td th:text="${pase.nombres + ' ' + pase.apellidos}"></td>
+                  <td th:if="${pase.cubiculo != null}" th:text="${'Cubiculo: #' + pase.numero + '-' + pase.edificio}"></td>
+                  <td th:if="${pase.evento != null}" th:text="${'Evento: ' + pase.titulo + '-' + pase.lugar}"></td>
+                  <td th:text="${pase.fecha}"></td>
+                  <td th:text="${pase.inicio}"></td>
+                  <td th:text="${pase.fin}"></td>
+                  <td th:text="${pase.pausa}"></td>
+                  <td>
+                      <a type="button" th:href="@{paselista/editar/} + ${pase.id}" class="btn btn-secondary" 
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                        <i class="bi bi-pencil-square"></i>
+                      </a>
+                      <a type="button" th:id="${pase.id}" href="#" class="btn btn-danger delete" 
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                        <i class="bi bi-trash"></i>
+                      </a>
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+</body>
+
+</html>

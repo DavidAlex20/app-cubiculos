@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.um.appasistencias.models.Cubiculos;
-import com.um.appasistencias.models.dto.CubiculosDto;
+import com.um.appasistencias.models.dto.CubiculosAsignacion;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -54,7 +54,7 @@ public interface CubiculosRepository extends R2dbcRepository<Cubiculos, UUID>{
         "FROM cubiculos AS cub\r\n" + //
         "INNER JOIN usuarios AS usu ON usu.id = cub.asignacion;"
     )
-    Flux<CubiculosDto> findAllWithAsignacion();
+    Flux<CubiculosAsignacion> findAllWithAsignacion();
 
     @Query("SELECT * FROM cubiculos WHERE asignacion = :asignacion ;")
     Mono<Cubiculos> findByAsignacion(@Param("asignacion") UUID asignacion);

@@ -22,7 +22,7 @@
           <div class="d-flex align-items-center">
             <h4 class="card-title">Pase de lista<br><span th:text="'Cubiculo #' + ${cubiculo.numero} + ' | ' + ${cubiculo.edificio}"></span></h4>
             <div class="ms-auto">
-              <a type="button" href="#" class="btn btn-primary ms-auto"><i class="bi bi-clipboard-data"></i>Reportes</a>
+              <a type="button" th:href="@{/reportes}" class="btn btn-primary ms-auto"><i class="bi bi-clipboard-data"></i>Reportes</a>
             </div>
           </div>
           <p class="m-1"></p>
@@ -34,12 +34,12 @@
               </button>
 
               <button th:if="${paselista.inicio != null && paselista.fin == null}" class="btn btn-danger btn-lg btn-cubiculo">
-                <i class="bi bi-clock"></i>
+                <i class="bi bi-clock-history"></i>
                 Terminar
               </button>
 
               <button th:if="${paselista.inicio != null && paselista.fin != null}" class="btn btn-success btn-lg">
-                <i class="bi bi-clock"></i>
+                <i class="bi bi-clipboard-check"></i>
                 Finalizado
               </button>
 
@@ -49,7 +49,7 @@
               </button>
 
               <button th:if="${paselista.pausainicio != null && paselista.pausafin == null && paselista.fin == null}" class="btn btn-outline-warning btn-lg btn-pausa">
-                <i class="bi bi-pause-fill"></i>
+                <i class="bi bi-play-fill"></i>
                 Reanudar
               </button>
             </div>
@@ -63,7 +63,7 @@
           <div class="d-flex align-items-center">
             <h4 class="card-title">Listado de eventos</h4>
             <div class="ms-auto">
-              <a type="button" href="#" class="btn btn-primary ms-auto"><i class="bi bi-calendar-week"></i>Calendario</a>
+              <a type="button" th:href="@{/calendario}" class="btn btn-primary ms-auto"><i class="bi bi-calendar3"></i>Calendario</a>
             </div>
           </div>
           <p class="m-1"></p>
@@ -71,9 +71,6 @@
           <div th:if="${eventosToday == false}" class="alert alert-secondary alert-dismissible fade show" role="alert">
             <i class="bi bi-calendar2-x me-1"></i>
             ¡No hay eventos agendados el día de hoy!
-            <!--
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-            -->
           </div>
 
           <table th:if="${eventosToday != false}" class="table table-bordered table-striped">

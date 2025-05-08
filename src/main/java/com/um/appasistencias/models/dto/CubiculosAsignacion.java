@@ -2,7 +2,7 @@ package com.um.appasistencias.models.dto;
 
 import java.util.UUID;
 
-public class CubiculosDto {
+public class CubiculosAsignacion {
     private UUID id;
     private int numero;
     private String edificio;
@@ -11,7 +11,7 @@ public class CubiculosDto {
     private String nombres;
     private String apellidos;
 
-    public CubiculosDto(int numero, String edificio, boolean disponible, UUID asignacion, String nombres, String apellidos) {
+    public CubiculosAsignacion(int numero, String edificio, boolean disponible, UUID asignacion, String nombres, String apellidos) {
         this.numero = numero;
         this.edificio = edificio;
         this.disponible = disponible;

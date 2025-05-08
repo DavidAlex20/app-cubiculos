@@ -1,6 +1,5 @@
 package com.um.appasistencias.models.dto;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
@@ -10,8 +9,8 @@ import com.um.appasistencias.models.Paselista;
 public class PaselistaDto {
     private UUID id;
     private UUID usuario;
-    private UUID evento = null;
-    private UUID cubiculo = null;
+    private UUID evento;
+    private UUID cubiculo;
     private String fecha;
     private LocalTime inicio;
     private LocalTime fin;
@@ -21,6 +20,7 @@ public class PaselistaDto {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public PaselistaDto(Paselista pase) {
+        this.id = pase.getId();
         this.usuario = pase.getUsuario();
         this.evento = pase.getEvento();
         this.cubiculo = pase.getCubiculo();

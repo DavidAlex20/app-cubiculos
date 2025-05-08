@@ -45,6 +45,7 @@
   <script th:if="${datosVista.pagina == 'lista-usuarios'}" th:src="@{/assets/js/scripts-usuarios.js}"></script>
   <script th:if="${datosVista.pagina == 'lista-cubiculos'}" th:src="@{/assets/js/scripts-cubiculos.js}"></script>
   <script th:if="${datosVista.pagina == 'lista-eventos'}" th:src="@{/assets/js/scripts-eventos.js}"></script>
+  <script th:if="${datosVista.pagina == 'lista-paselista'}" th:src="@{/assets/js/scripts-paselista.js}"></script>
   <script th:if="${datosVista.pagina == 'index'}" th:src="@{/assets/js/scripts-inicio.js}"></script>
 </head>
 
@@ -120,7 +121,7 @@
     <li class="nav-item">
       <a th:class="${datosVista.pagina == 'index' ? 'nav-link' : 'nav-link collapsed'}" th:href="@{/}">
         <i class="bi bi-grid"></i>
-        <span>Menu</span>
+        <span>Inicio</span>
       </a>
     </li><!-- End Dashboard Nav -->
 
@@ -148,7 +149,27 @@
           </a>
         </li>
 
+        <li>
+          <a th:class="${datosVista.pagina == 'lista-paselista' ? 'nav-link active' : 'nav-link'}" th:href="@{/admin/paselista}">
+            <i class="bi bi-circle"></i><span>Pases de lista</span>
+          </a>
+        </li>
+
       </ul>
+    </li>
+
+    <li class="nav-item">
+      <a th:class="${datosVista.pagina == 'calendario' ? 'nav-link' : 'nav-link collapsed'}" th:href="@{/calendario}">
+        <i class="bi bi-calendar3"></i>
+        <span>Calendario</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a th:class="${datosVista.pagina == 'reportes' ? 'nav-link' : 'nav-link collapsed'}" th:href="@{/reportes}">
+        <i class="bi bi-clipboard-data"></i>
+        <span>Reportes</span>
+      </a>
     </li>
 
   </ul>

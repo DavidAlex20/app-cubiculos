@@ -20,7 +20,7 @@ public class ScheduleComponent {
 
     @Scheduled(cron = "0 * * * * *")
     public void consoleMessage(){
-        log.info("Hora del dia => " + java.time.LocalDateTime.now());
+        //log.info("Hora del dia => " + java.time.LocalDateTime.now());
 
         LocalTime time = LocalTime.now().withNano(0);
         if(time.equals(TARGET_TIME)) {

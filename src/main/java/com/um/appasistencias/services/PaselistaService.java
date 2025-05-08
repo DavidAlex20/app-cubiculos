@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.um.appasistencias.models.Paselista;
+import com.um.appasistencias.models.dto.PaselistaListado;
 import com.um.appasistencias.repositories.CubiculosRepository;
 import com.um.appasistencias.repositories.PaselistaRepository;
 import com.um.appasistencias.repositories.UsuariosRepository;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -105,5 +107,41 @@ public class PaselistaService {
     private Mono<Paselista> finalizarPaselista(UUID paselista){
         log.info("Finalizando registro");
         return paselistaRepository.paselistaTerminar(paselista);
+    }
+
+    public Flux<PaselistaListado> paselistaListado() {
+        return paselistaRepository.paselistaListado();
+    }
+
+    public Flux<Paselista> findAll(){
+        return paselistaRepository.findAll();
+    }
+
+    public Mono<Paselista> findById(UUID id){
+        return paselistaRepository.findById(id);
+    }
+
+    public Mono<Void> deleteById(UUID id){
+        return paselistaRepository.deleteById(id);
+    }
+
+    public Mono<Paselista> save(UUID usuario, UUID evento, UUID cubiculo, LocalDate fecha, LocalTime inicio, LocalTime fin, LocalTime pausainicio, LocalTime pausafin){
+        if(evento == null && cubiculo != null){
+            return paselistaRepository.saveCubiculo(usuario, cubiculo, fecha, inicio, fin, pausainicio, pausafin);
+        } else if (evento != null && cubiculo == null) {
+            return paselistaRepository.saveEvento(usuario, evento, fecha, inicio, fin, pausainicio, pausafin);
+        } else {
+            log.info("Requerimientos de guardado no cumplidos");
+            return Mono.just(new Paselista());
+        }
+    }
+
+    public Mono<Paselista> update(UUID id, Paselista pase) {
+        return paselistaRepository.update(pase.getUsuario(), pase.getEvento(), pase.getCubiculo(), 
+        pase.getFecha(), pase.getInicio(), pase.getFin(), pase.getPausainicio(), pase.getPausafin(), id);
+    }
+
+    public Mono<Boolean> paselistaExistente(UUID id){
+        return paselistaRepository.paselistaExistente(id);
     }
 }

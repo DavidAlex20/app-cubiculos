@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.um.appasistencias.models.Cubiculos;
 import com.um.appasistencias.models.Usuarios;
-import com.um.appasistencias.models.dto.CubiculosDto;
+import com.um.appasistencias.models.dto.CubiculosAsignacion;
 import com.um.appasistencias.models.dto.DatosVista;
 import com.um.appasistencias.services.CubiculosService;
 import com.um.appasistencias.services.UsuariosService;
@@ -37,7 +37,7 @@ public class CubiculosController {
 
     @GetMapping
     public String listado(@AuthenticationPrincipal Usuarios user, Model model) {
-        Flux<CubiculosDto> cubiculos = cubiculosService.findAllWithAsignacion();
+        Flux<CubiculosAsignacion> cubiculos = cubiculosService.findAllWithAsignacion();
         Flux<Usuarios> usuarios = usuariosService.findAll();
         model.addAttribute("cubiculos", cubiculos);
         model.addAttribute("usuarios", usuarios);
