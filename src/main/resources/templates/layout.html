@@ -46,6 +46,7 @@
   <script th:if="${datosVista.pagina == 'lista-cubiculos'}" th:src="@{/assets/js/scripts-cubiculos.js}"></script>
   <script th:if="${datosVista.pagina == 'lista-eventos'}" th:src="@{/assets/js/scripts-eventos.js}"></script>
   <script th:if="${datosVista.pagina == 'lista-paselista'}" th:src="@{/assets/js/scripts-paselista.js}"></script>
+  <script th:if="${datosVista.pagina == 'lista-reportes'}" th:src="@{/assets/js/scripts-reportes.js}"></script>
   <script th:if="${datosVista.pagina == 'index'}" th:src="@{/assets/js/scripts-inicio.js}"></script>
 </head>
 
@@ -155,6 +156,11 @@
           </a>
         </li>
 
+        <li>
+          <a th:class="${datosVista.pagina == 'lista-reportes' ? 'nav-link active' : 'nav-link'}" th:href="@{/admin/reportes}">
+            <i class="bi bi-circle"></i><span>Reportes</span>
+          </a>
+        </li>
       </ul>
     </li>
 
@@ -166,9 +172,9 @@
     </li>
 
     <li class="nav-item">
-      <a th:class="${datosVista.pagina == 'reportes' ? 'nav-link' : 'nav-link collapsed'}" th:href="@{/reportes}">
+      <a th:class="${datosVista.pagina == 'asistencia' ? 'nav-link' : 'nav-link collapsed'}" th:href="@{/asistencia}">
         <i class="bi bi-clipboard-data"></i>
-        <span>Reportes</span>
+        <span>Asistencia</span>
       </a>
     </li>
 

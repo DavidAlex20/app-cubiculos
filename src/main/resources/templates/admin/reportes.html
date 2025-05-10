@@ -1,0 +1,68 @@
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}">
+<body>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <main id="main" class="main" layout:fragment="body">
+
+    <div class="pagetitle">
+      <h1 th:text="${datosVista.titulo}"></h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a th:href="@{/dashboard}">Menu</a></li>
+          <li class="breadcrumb-item">Administrador</li>
+          <li class="breadcrumb-item active">Reportes</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+  
+    <section class="section dashboard">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <h5 class="card-title" th:text="${datosVista.titulo}"></h5>
+            <a type="button" th:href="@{reportes/crear}" class="btn btn-primary ms-auto">Crear</a>
+          </div>
+          <p class="m-1"></p>
+
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                  <th scope="col">Usuario</th>
+                  <th scope="col">Semana</th>
+                  <th scope="col">Horas puntuales</th>
+                  <th scope="col">Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="repo: ${reportes}">
+                  <td th:text="${repo.nombres + ' ' + repo.apellidos}"></td>
+                  <td th:text="${repo.semanainicio + '-' + repo.semanafin}"></td>
+                  <td th:text="${repo.puntuales}"></td>
+                  <td>
+                    <!--
+                    -->
+                      <a type="button" th:id="${repo.id}" href="#" class="btn btn-secondary update" 
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="Actualizar">
+                        <i class="bi bi-pencil-square"></i>
+                      </a>
+                      <a type="button" th:id="${repo.id}" href="#" class="btn btn-danger delete" 
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                        <i class="bi bi-trash"></i>
+                      </a>
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+</body>
+
+</html>

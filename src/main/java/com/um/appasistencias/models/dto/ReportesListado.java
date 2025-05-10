@@ -1,8 +1,9 @@
 package com.um.appasistencias.models.dto;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.util.UUID;
+
+import io.r2dbc.postgresql.codec.Interval;
 
 public class ReportesListado {
     private UUID id;
@@ -11,10 +12,10 @@ public class ReportesListado {
     private String apellidos;
     private LocalDate semanainicio;
     private LocalDate semanafin;
-    private Duration puntuales;
+    private Interval puntuales;
     
     public ReportesListado(UUID id, UUID usuario, String nombres, String apellidos, LocalDate semanainicio,
-            LocalDate semanafin, Duration puntuales) {
+            LocalDate semanafin, Interval puntuales) {
         this.id = id;
         this.usuario = usuario;
         this.nombres = nombres;
@@ -72,11 +73,11 @@ public class ReportesListado {
         this.semanafin = semanafin;
     }
 
-    public Duration getPuntuales() {
+    public Interval getPuntuales() {
         return puntuales;
     }
 
-    public void setPuntuales(Duration puntuales) {
+    public void setPuntuales(Interval puntuales) {
         this.puntuales = puntuales;
     }
 

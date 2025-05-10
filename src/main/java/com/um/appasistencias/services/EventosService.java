@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.um.appasistencias.models.Eventos;
 import com.um.appasistencias.models.dto.EventosEstado;
 import com.um.appasistencias.repositories.EventosRepository;
-import com.um.appasistencias.repositories.UsuariosRepository;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -18,7 +17,6 @@ import reactor.core.publisher.Mono;
 @Service
 public class EventosService {
     @Autowired private EventosRepository eventosRepository;
-    @Autowired private UsuariosRepository usuariosRepository;
 
     public Flux<Eventos> findAll(){
         return eventosRepository.findAll();

@@ -1,19 +1,27 @@
 package com.um.appasistencias.models;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
+
+import io.r2dbc.postgresql.codec.Interval;
 
 public class Reportes {
     @Id private UUID id;
     private UUID usuario;
     private LocalDate semanainicio;
     private LocalDate semanafin;
-    private Duration puntuales;
+    private Interval puntuales;
 
-    public Reportes(UUID usuario, LocalDate semanainicio, LocalDate semanafin, Duration puntuales) {
+    public Reportes(){
+        this.id = null;
+        this.usuario = null;
+        this.semanainicio = null;
+        this.semanafin = null;
+        this.puntuales = null;
+    }
+    public Reportes(UUID usuario, LocalDate semanainicio, LocalDate semanafin, Interval puntuales) {
         this.usuario = usuario;
         this.semanainicio = semanainicio;
         this.semanafin = semanafin;
@@ -52,11 +60,11 @@ public class Reportes {
         this.semanafin = semanafin;
     }
 
-    public Duration getPuntuales() {
+    public Interval getPuntuales() {
         return puntuales;
     }
 
-    public void setPuntuales(Duration puntuales) {
+    public void setPuntuales(Interval puntuales) {
         this.puntuales = puntuales;
     }
 

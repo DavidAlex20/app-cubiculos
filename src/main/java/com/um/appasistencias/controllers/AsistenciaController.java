@@ -12,16 +12,16 @@ import com.um.appasistencias.models.Usuarios;
 import com.um.appasistencias.models.dto.DatosVista;
 
 @Controller
-@RequestMapping("/reportes")
-public class ReportesController {
-    private static final Logger log = LoggerFactory.getLogger(ReportesController.class);
+@RequestMapping("/asistencia")
+public class AsistenciaController {
+    private static final Logger log = LoggerFactory.getLogger(AsistenciaController.class);
 
     @GetMapping
     public String index(@AuthenticationPrincipal Usuarios user, Model model) {
-        DatosVista datosVista = new DatosVista(user, "reportes", "Reportes", false);
+        DatosVista datosVista = new DatosVista(user, "asistencia", "Asistencia", false);
         log.info(datosVista.toString());
         model.addAttribute("datosVista", datosVista);
 
-        return "reportes";
+        return "asistencia";
     }
 }

@@ -56,7 +56,7 @@ public class PaselistaController {
     @GetMapping("/crear")
     public String crear(@AuthenticationPrincipal Usuarios user, Model model) {
         Paselista paselista = new Paselista();
-        DatosVista datosVista = new DatosVista(user, "lista-paselista", "Listado de pases de lista", true);
+        DatosVista datosVista = new DatosVista(user, "lista-paselista", "Crear pase de lista", true);
         Flux<Usuarios> usuarios = usuariosService.findAll();
         Flux<Eventos> eventos = eventosService.findAll();
         Flux<CubiculosAsignacion> cubiculos = cubiculosService.findAllWithAsignacion();
@@ -69,11 +69,11 @@ public class PaselistaController {
     }
 
     @GetMapping("/editar/{id}")
-    public Mono<String> getMethodName(@AuthenticationPrincipal Usuarios user, @PathVariable UUID id, Model model) {
+    public Mono<String> editar(@AuthenticationPrincipal Usuarios user, @PathVariable UUID id, Model model) {
         return paselistaService.findById(id).map(PaselistaDto::new)
         .doOnNext(paselista -> {
             log.info(paselista.toString());
-            DatosVista datosVista = new DatosVista(user, "lista-paselista", "Listado de pases de lista", true);
+            DatosVista datosVista = new DatosVista(user, "lista-paselista", "Editar pase de lista", true);
             Flux<Usuarios> usuarios = usuariosService.findAll();
             Flux<Eventos> eventos = eventosService.findAll();
             Flux<CubiculosAsignacion> cubiculos = cubiculosService.findAllWithAsignacion();

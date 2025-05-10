@@ -1,0 +1,60 @@
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}">
+<body>
+  <main id="main" class="main" layout:fragment="body">
+
+    <div class="pagetitle">
+        <h1 th:text="${datosVista.titulo}"></h1>
+        <nav>
+            <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/dashboard}">Menu</a></li>
+            <li class="breadcrumb-item">Administrador</li>
+            <li class="breadcrumb-item active">Reportes</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+  
+    <section class="section dashboard">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <h5 class="card-title" th:text="${datosVista.titulo}"></h5>
+                    <a type="button" th:href="@{/admin/reportes}" class="btn btn-secondary ms-auto">Cancelar</a>
+                  </div>
+                <p class="m-1"></p>
+                
+                <!-- Multi Columns Form -->
+                <form th:id="save" class="row g-3 needs-validation"
+                    th:object="${reporte}" novalidate>
+                    <input th:id="id" type="hidden" th:field="*{id}">
+                    <div class="col-md-6">
+                        <label for="usuario" class="form-label">Usuario</label>
+                        <select th:id="usuario" th:field="*{usuario}" id="usuario" class="form-control">
+                            <option th:each="user:${usuarios}" th:value="${user.id}" th:text="${user.nombres + ' ' + user.apellidos}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="semanainicio" class="form-label">Inicio de semana</label>
+                        <input th:id="semanainicio" type="date" class="form-control" th:field="*{semanainicio}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="semanafin" class="form-label">Fin de semana</label>
+                        <input th:id="semanafin" type="date" class="form-control" th:field="*{semanafin}" required>
+                    </div>
+                    <div>
+                        <input type="submit" class="btn btn-success" value="Guardar">
+                    </div>
+                </form><!-- End Multi Columns Form -->
+            </div>
+        </div>
+    </section>
+  </main><!-- End #main -->
+
+  <script>
+      
+  </script>
+</body>
+
+
+</html>
