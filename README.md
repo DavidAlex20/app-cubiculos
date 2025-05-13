@@ -19,7 +19,7 @@ La tecnología principal utilizada es **Springboot Webflux**, la mayor parte de 
 
 Las carpetas del proyecto están divididas de la siguiente manera:
 
-<p align="center">
+<p align="left">
     <img src="https://github.com/user-attachments/assets/728b995c-861c-41c2-88c5-15f86db07d6d" width="256"/>
 </p>
 
@@ -32,3 +32,7 @@ Las carpetas del proyecto están divididas de la siguiente manera:
 ### Base de datos
 
 
+
+<p align="left">
+    <img src="https://github.com/user-attachments/assets/b166c2a2-35ce-4d5a-879c-bc02d52b882e" width="512"/>
+</p>
