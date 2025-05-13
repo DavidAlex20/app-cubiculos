@@ -3,8 +3,8 @@
 AppCubiculos es una aplicación para registrar pases de lista de los docentes a sus respectivos cubículos de estudio, también cuenta con la función de registrar pases de lista sobre eventos asignados por la facultad, revisión de pases de lista, etc. Es una aplicación en proceso de desarrollo, hasta ahora cuenta con un sistema de administrador con CRUDS de las tablas de la base de datos y las opciones de pase de lista del día para los usuarios.
 
 ## Tabla de contenido
-- [Tecnologias](#tecnologias)
 - [Instalacion](#instalacion)
+- [Tecnologias](#tecnologias)
 - [Composicion del proyecto](#composicion-del-proyecto)
 - [Ideas](#ideas)
 
