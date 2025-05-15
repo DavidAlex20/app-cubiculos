@@ -45,6 +45,9 @@ Dentro de la carpeta ***main*** se encuentran las clases del *backend*:
 
 Dentro de la carpeta ***resources*** se encuentran los archivos para el *frontend*, al ser mayormente un proyecto de *backend* se utilizó una base con **Bootstrap 5** llamada [NiceAdmin](https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/), la cual ofrece bastantes herramientas para la muestra de datos, íconos, gráficos, entre otras herramientas sencillas. El *frontend* se encuentra dentro de la carpeta ***resources/templates***, se utilizó **Thymeleaf** para poder hacer las vistas utilizando plantillas, similar a como funcionan otros *frameworks* como **Angular**; este *frontend* es más un diseño simple para tener una vista de la aplicación, a futuras actualizaciones podría ser más óptimo utilizar algún *framework* enfocado en este.
 
+> [!NOTE]
+> Para ver la funcionalidad del proyecto en el apartado del *frontend*, vease [el video en este enlace](https://www.youtube.com/watch?v=Yd4y3VdGZ1g).
+
 ### Base de datos
 
 La siguiente imagen muestra cómo están divididas las tablas de la base de datos. Como se puede ver solo hay una llave foránea que es en la tabla de cubículos, la cual puede o no tener un usuario asignado.
